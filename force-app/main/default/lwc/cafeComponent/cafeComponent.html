@@ -1,0 +1,48 @@
+<template>
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={submitOk}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{headerText}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>{bodyText}</b></p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick={submitOk} title="OK">OK</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <div class="slds-p-around_medium">
+        <lightning-datatable
+            key-field="id"
+            hide-checkbox-column
+            data={data}
+            columns={columns}
+            onrowaction={rowAction}>
+        </lightning-datatable>
+        <h1 style="text-align:right; font-size: 20px; font-weight: bold;">Total price: {totalPrice}€</h1>
+        <lightning-layout horizontal-align="spread">
+            <lightning-layout-item padding="around-small">
+                <lightning-input type="time" value={deliveryTime} name="deliveryTimeInput" label="Enter delivery time" onchange={handleDeliveryTimeChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <lightning-input type="checkbox" checked={notify} label="Notify me when the order is ready" name="notifyInput" onchange={handleNotifyChange}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-textarea name="commentSection" label="Comment" onchange={handleCommentChange}></lightning-textarea>
+        <div class="slds-align_absolute-center">
+            <lightning-button variant="brand" label="Submit" title="Submit the order" onclick={handleSubmit} class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </div>
+</template>
